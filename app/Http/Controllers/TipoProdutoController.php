@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\TipoProduto;
-use DB;
 
 class TipoProdutoController extends Controller
 {
@@ -15,8 +14,7 @@ class TipoProdutoController extends Controller
      */
     public function index()
     {
-        $tipoProdutos = DB::select("select * from Tipo_Produtos");
-        return view('TipoProduto.index')->with('tipoProdutos' , $tipoProdutos);
+        return view('TipoProduto.index');
     }
 
     /**
