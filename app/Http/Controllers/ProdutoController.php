@@ -56,7 +56,14 @@ class ProdutoController extends Controller
      */
     public function show($id)
     {
-       
+        $produto = Produto::find($id);
+        $tipoProdutos = DB::select("select Tipo_Produtos.descricao from Tipo_Produtos where Tipo_Produtos.id = ($id);");
+
+        if(isset($produto))
+        return view("produto.show")->with("produto", $produto,)->with("tipoProdutos", $tipoProdutos);
+        
+
+        return "Não encontrado";
     }
 
     /**
@@ -67,7 +74,12 @@ class ProdutoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $produto = Produto::find($id);
+        $tipoProdutos = DB::select("select * from Tipo_Produtos");
+        if(isset($produto))
+        return view("produto.edit")->with("produto", $produto,)->with("tipoProdutos", $tipoProdutos);
+    
+        return "Não encontrado";
     }
 
     /**
@@ -79,7 +91,16 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $produto = Produto::find($id);
+        if(isset($produto)){
+
+                $produto->nome = $request->nome;
+                $produto->preco = $request->preco;
+                $produto->Tipo_Produtos_id = $request->Tipo_Produtos_id;
+                $produto->update();
+                return $this->index();
+        }
+        return "Não encontrado";
     }
 
     /**
@@ -90,6 +111,7 @@ class ProdutoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Produto::find($id)->delete();
+        return redirect()->route('produto.index')->with('success','User Deleted');
     }
 }

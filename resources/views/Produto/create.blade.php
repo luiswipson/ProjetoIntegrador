@@ -27,9 +27,6 @@
             <div class="form-group">
               <label for="imput-tipo-produto">Tipo de Produto</label>
               <select class="form-control" id="imput-tipo-produto" name="Tipo_Produtos_id">
-                {{--<option value=1 >Default select1</option>
-                <option value=2 >Default select2</option>
-                <option value=3 >Default select3</option>--}}
                 @foreach ($tipoProdutos as $tipoProduto)
                   <option value={{$tipoProduto->id}}>{{$tipoProduto->descricao}}</option>
                 @endforeach
