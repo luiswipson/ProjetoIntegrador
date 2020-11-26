@@ -100,6 +100,8 @@ class TipoProdutoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        TipoProduto::find($id)->delete();
+        return redirect()->route('tipoproduto.index')->with('success','User Deleted');
+
     }
 }

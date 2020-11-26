@@ -8,9 +8,11 @@
     <title>Index de Tipo Produto</title>
 </head>
 <body>
-    <div class="container">
+      
+
+    <div class=" container">
         <a href={{route('tipoproduto.create')}} class="btn btn-primary">Criar um Tipo de Produto</a>
-        <table class="table table-hover">
+        <table class=" table table-hover">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -26,15 +28,52 @@
                         <td>
                             <a href="{{route('tipoproduto.show', $tipoProduto->id)}}" class="btn btn-primary">Show</a>
                             <a href="{{route('tipoproduto.edit', $tipoProduto->id)}}" class="btn btn-info">Edit</a>
-                            <a href="#" class="btn btn-danger">Remover</a>
+                            <a class="btn btn-danger BotaoRemover" data-toggle="modal" data-target="#modalDelete" value="{{route('tipoproduto.destroy', $tipoProduto->id)}}">Remover</a>
                         </td>
                     </tr>
                 @endforeach   
-    
             </tbody>
         </table>
      </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+  <!-- Modal -->
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Remover</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          Deseja remover este tipo de produto?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+          <form id="id-form-delete" method="POST" action="">
+            @csrf
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-danger">Remover</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+  <script>
+    var buttons = document.querySelectorAll('.BotaoRemover');
+    var formDelete = document.querySelector('#id-form-delete');
+    buttons.forEach(button => {
+        button.addEventListener('click', functionBotaoRemoverClick);
+    });
+    function functionBotaoRemoverClick(){
+        formDelete.setAttribute("action", this.getAttribute("value"))
+    }
+  </script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>
