@@ -15,7 +15,9 @@ class ProdutoController extends Controller
      */
     public function index()
     {
-        //
+        $Produtos = DB::select("select Produtos.id, Produtos.nome, Produtos.preco, 
+        Tipo_Produtos.descricao from Produtos join Tipo_Produtos on Produtos.Tipo_Produtos_id = Tipo_Produtos.id");
+        return view('Produto.index')->with('Produtos' , $Produtos);
     }
 
     /**
@@ -43,8 +45,7 @@ class ProdutoController extends Controller
         $produto->Tipo_Produtos_id = $request->Tipo_Produtos_id;
         $produto->save();
         
-        $tipoProdutos = DB::select("select * from Tipo_Produtos");
-        return view('Produto.index')->with("tipoProdutos", $tipoProdutos);
+     return $this->index();
     }
 
     /**
@@ -55,7 +56,7 @@ class ProdutoController extends Controller
      */
     public function show($id)
     {
-        //
+       
     }
 
     /**

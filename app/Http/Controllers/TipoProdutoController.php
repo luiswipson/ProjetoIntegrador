@@ -40,7 +40,7 @@ class TipoProdutoController extends Controller
         $tipoProduto = new TipoProduto();
         $tipoProduto->descricao = $request->descricao;
         $tipoProduto->save();
-        return view('TipoProduto.create');
+        return $this->index();
     }
 
     /**
@@ -51,7 +51,8 @@ class TipoProdutoController extends Controller
      */
     public function show($id)
     {
-        //
+        $tipoProduto = DB::select("select * from Tipo_Produtos where Tipo_Produtos.id = :idTipoProduto" , ['idTipoProduto' => $id])[0];
+        return view("TipoProduto.show")->with("tipoProduto", $tipoProduto);
     }
 
     /**
