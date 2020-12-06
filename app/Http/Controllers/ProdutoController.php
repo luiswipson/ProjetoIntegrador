@@ -83,7 +83,7 @@ class ProdutoController extends Controller
     {
         $produto = Produto::find($id);
         if(isset($produto)){
-            $tipoProdutos = TipoProduto::where('descricao', [0])->get();
+            $tipoProdutos = TipoProduto::all();
            // var_dump($tipoProdutos);
             return view("produto.edit")->with("produto", $produto,)->with("tipoProdutos", $tipoProdutos);
         }
