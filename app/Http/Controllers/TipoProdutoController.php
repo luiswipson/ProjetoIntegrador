@@ -100,8 +100,14 @@ class TipoProdutoController extends Controller
      */
     public function destroy($id)
     {
-        TipoProduto::find($id)->delete();
-        return redirect()->route('tipoproduto.index')->with('success','User Deleted');
-
+     
+        $tipoProduto = TipoProduto::find($id);
+        if(isset($tipoProduto)){
+            $tipoProduto->delete();
+            return $this->index();
+        }
+        return "Não encontrado";
     }
+
+    
 }

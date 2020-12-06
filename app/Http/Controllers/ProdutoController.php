@@ -119,7 +119,11 @@ class ProdutoController extends Controller
      */
     public function destroy($id)
     {
-        Produto::find($id)->delete();
-        return redirect()->route('produto.index')->with('success','User Deleted');
+        $produto = Produto::find($id);
+        if(isset($produto)){
+            $produto->delete();
+            return $this->index();
+        }
+        return "Não encontrado";
     }
 }
