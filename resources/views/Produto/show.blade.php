@@ -15,23 +15,21 @@
         </div>
         <div class="form-group">
             <label for="input-nome">Nome</label>
-            <input name="nome" type="text" class="form-control" id="input-nome" value={{$produto->nome}} disabled>
+            <input type="text" class="form-control" id="input-nome" value={{$produto->nome}} disabled>
           </div>
           <div class="form-group">
             <label for="input-preco">Preço</label>
-            <input name="preco" type="text" class="form-control" id="input-preco" value={{$produto->preco}} disabled>
+            <input type="text" class="form-control" id="input-preco" value={{$produto->preco}} disabled>
           </div>
 
           <div class="form-group">
             <label for="imput-tipo-produto">Tipo de Produto</label>
-            <select class="form-control" id="imput-tipo-produto" name="Tipo_Produtos_id" disabled>
-              @foreach ($tipoProdutos as $tipoProduto)
-                <option name="descricao" value={{$tipoProduto->descricao}}>{{$tipoProduto->descricao}}</option>
-              @endforeach
+            <select class="form-control" id="imput-tipo-produto" disabled>
+                <option  value={{$tipoProduto->id}}>{{$tipoProduto->descricao}}</option>
             </select>
           </div>
           
-        <a href={{route('tipoproduto.index')}} class="btn btn-primary">Voltar</a>
+        <a href={{route('produto.index')}} class="btn btn-primary">Voltar</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Produto;
 use Illuminate\Http\Request;
 use DB;
+use App\TipoProduto;
 
 class ProdutoController extends Controller
 {
@@ -57,10 +58,16 @@ class ProdutoController extends Controller
     public function show($id)
     {
         $produto = Produto::find($id);
-        $tipoProdutos = DB::select("select Tipo_Produtos.descricao from Tipo_Produtos where Tipo_Produtos.id = ($id);");
+        
 
-        if(isset($produto))
-        return view("produto.show")->with("produto", $produto,)->with("tipoProdutos", $tipoProdutos);
+        if(isset($produto)){
+           // $tipoProdutos = DB::select('select * from Tipo_Produtos where Tipo_Produtos.id = :id_tipo', ['id_tipo' => $produto->Tipo_Produtos_id]);
+            //return view("produto.show")->with("produto", $produto,)->with("tipoProdutos", $tipoProdutos);
+            $tipoProduto = TipoProduto::find($produto->Tipo_Produtos_id);
+            return view("produto.show")->with("produto", $produto,)->with("tipoProduto", $tipoProduto);
+
+        }
+        
         
 
         return "Não encontrado";
@@ -75,10 +82,11 @@ class ProdutoController extends Controller
     public function edit($id)
     {
         $produto = Produto::find($id);
-        $tipoProdutos = DB::select("select * from Tipo_Produtos");
-        if(isset($produto))
-        return view("produto.edit")->with("produto", $produto,)->with("tipoProdutos", $tipoProdutos);
-    
+        if(isset($produto)){
+            $tipoProdutos = TipoProduto::where('descricao', [0])->get();
+           // var_dump($tipoProdutos);
+            return view("produto.edit")->with("produto", $produto,)->with("tipoProdutos", $tipoProdutos);
+        }
         return "Não encontrado";
     }
 

@@ -29,7 +29,11 @@
             <label for="imput-tipo-produto">Tipo de Produto</label>
             <select class="form-control" id="imput-tipo-produto" name="Tipo_Produtos_id">
               @foreach ($tipoProdutos as $tipoProduto)
-              <option value={{$produto->Tipo_Produtos_id}}>{{$tipoProduto->descricao}}</option>
+                @if ($tipoProduto->id == $produto->Tipo_Produtos_id)
+            <option value={{$tipoProduto->id}} selected>{{$tipoProduto->descricao}}</option>
+            @else
+                  <option value={{$tipoProduto->id}}>{{$tipoProduto->descricao}}</option>
+                  @endif
               @endforeach
             </select>
           </div>
