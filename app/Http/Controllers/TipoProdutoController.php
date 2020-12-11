@@ -24,6 +24,13 @@ class TipoProdutoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private function indexError($error)
+    {
+        $tipoProdutos = DB::select("select * from Tipo_Produtos");
+        return view('TipoProduto.index')->with('tipoProdutos' , $tipoProdutos)->with('error', $error);
+    }
+
     public function create()
     {
         return view('TipoProduto.create');
@@ -39,7 +46,14 @@ class TipoProdutoController extends Controller
     {
         $tipoProduto = new TipoProduto();
         $tipoProduto->descricao = $request->descricao;
-        $tipoProduto->save();
+        try {
+            $tipoProduto->save();
+        } catch (\Throwable $th) {
+            $error['type'] = 'danger';
+            $error['message'] = 'Problema ao salvar um recurso' . $th->getMessage();
+            return $this->indexError($error);
+    }
+     
         return $this->index();
     }
 
@@ -55,7 +69,9 @@ class TipoProdutoController extends Controller
         if(isset($tipoProduto))
         return view("TipoProduto.show")->with("tipoProduto", $tipoProduto);
 
-        return "Não encontrado";
+        $error['type'] = 'danger';
+        $error['message'] = 'Recurso não encotrado';
+        return $this->indexError($error);
     }
 
     /**
@@ -70,7 +86,9 @@ class TipoProdutoController extends Controller
         if(isset($tipoProduto))
         return view("TipoProduto.edit")->with("tipoProduto", $tipoProduto);
 
-        return "Não encontrado";
+        $error['type'] = 'danger';
+        $error['message'] = 'Recurso não encotrado';
+        return $this->indexError($error);
     }
 
     /**
@@ -86,10 +104,18 @@ class TipoProdutoController extends Controller
         if(isset($tipoProduto)){
 
                 $tipoProduto->descricao = $request->descricao;
-                $tipoProduto->update();
+                try {
+                    $tipoProduto->update();
+                } catch (\Throwable $th) {
+                    $error['type'] = 'danger';
+                    $error['message'] = 'Problema ao atualizar um recurso' . $th->getMessage();
+                    return $this->indexError($error);
+            }
                 return $this->index();
         }
-        return "Não encontrado";
+        $error['type'] = 'danger';
+        $error['message'] = 'Recurso não encotrado';
+        return $this->indexError($error);
     }
 
     /**
@@ -103,11 +129,16 @@ class TipoProdutoController extends Controller
      
         $tipoProduto = TipoProduto::find($id);
         if(isset($tipoProduto)){
-            $tipoProduto->delete();
-            return $this->index();
+            try {
+                $tipoProduto->delete();
+            } catch (\Throwable $th) {
+                $error['type'] = 'danger';
+                $error['message'] = 'Problema ao remover um recurso' . $th->getMessage();
+                return $this->indexError($error);
         }
-        return "Não encontrado";
+       return $this->index();
     }
 
-    
+}
+
 }
