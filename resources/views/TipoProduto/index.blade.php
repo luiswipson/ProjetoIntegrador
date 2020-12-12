@@ -11,9 +11,9 @@
       
 
     <div class=" container">
-      @if(isset($error))
-      <div class="alert alert-{{$error['type']}} alert-dismissible fade show" role="alert">
-        <strong>{{$error['message']}}.</strong>
+      @if(isset($message))
+      <div class="alert alert-{{$message['type']}} alert-dismissible fade show" role="alert">
+        <strong>{{$message['message']}}.</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
