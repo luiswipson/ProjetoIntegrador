@@ -20,5 +20,6 @@ Route::get('/', function () {
 
 Route::resource('tipoproduto','TipoProdutoController');
 Route::resource('produto','ProdutoController');
+Route::resource('endereco','EnderecoController');
 
 Route::get('pedido' , 'PedidoController@index')->name('pedido.index');
