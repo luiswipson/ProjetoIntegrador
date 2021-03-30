@@ -18,7 +18,7 @@
               <div class="col-5">
                 <a href="#" class="btn btn-primary w-100"> Voltar </a>
               </div>
-              <form class="col-7" method="POST" action="#">
+              <form id="id-form-novo-pedido" class="col-7" method="POST" action="/pedido/1">
                 @csrf
                 <input type="submit" class="btn btn-info w-100" value="Novo Pedido">
               </form>
@@ -81,7 +81,7 @@
              <form action="">
               @csrf
               <div class="form-group">
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select class="form-control" id="id-selecao-endereco">
                   @foreach ($enderecos as $endereco)
                       <option value={{$endereco->id}}>
                         {{$endereco->logradouro}}, nº {{$endereco->numero}}. {{$endereco->bairro}}

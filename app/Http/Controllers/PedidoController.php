@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use DB;
 use App\TipoProduto;
 use App\Produto;
+use App\Endereco;
 use App\Pedido;
 use App\PedidoProduto;
+use Carbon\Carbon;
 
 class PedidoController extends Controller
 {
@@ -44,6 +46,7 @@ class PedidoController extends Controller
                 $totalPedido = DB::select("select sum(Pedido_Produtos.quantidade * Produtos.preco) as total_pedido from Pedido_Produtos
                 join Produtos on Pedido_Produtos.Produtos_id = Produtos.id
                 where Pedido_Produtos.Pedidos_Id = ?" , [$ultimoPedidoRealizado->id])[0];
+                $totalPedido = $totalPedido->total_pedido;
             }
             
             switch($ultimoPedidoRealizado->status){
@@ -64,7 +67,7 @@ class PedidoController extends Controller
                     break;
                 }
         }
-        return view('Pedido.index')->with('pedidos', $pedidos)->with('tipoProdutos',$tipoProdutos)->with('produtos',$produtos)->with('enderecos',$enderecos)->with('produtosPedido',$produtosPedido)->with('totalPedido',$totalPedido->total_pedido)->with('estado',$estado);
+        return view('Pedido.index')->with('pedidos', $pedidos)->with('tipoProdutos',$tipoProdutos)->with('produtos',$produtos)->with('enderecos',$enderecos)->with('produtosPedido',$produtosPedido)->with('totalPedido',$totalPedido)->with('estado',$estado);
     }
 
     /**
@@ -83,9 +86,63 @@ class PedidoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $endereco_id)
     {
-        //
+        $user_id = 1;
+        if(isset($endereco_id) && $endereco_id != 'null'){
+            $endereco = Endereco::find($endereco_id);
+            if($endereco && $endereco->Users_id == $user_id){
+                $pedido = new Pedido();
+                $pedido->dataEHora = Carbon::now()->toDateTimeString();
+                $pedido->status = "A";
+                $pedido->Users_id = $user_id;
+                $pedido->Enderecos_id = $endereco_id;
+                try {
+                    $pedido->save();
+                } catch (\Throwable $th) {
+                    $response['success'] = false;
+                    $response['message'] = "Erro ao salvar pedido";
+                    $response['return'] = [];
+                    //var_dump($response);
+                    return response()->json($response, 507);
+                }
+
+                $pedido = Pedido::where('Users_id', $user_id)->orderBy('id', 'DESC')->get();
+
+                $response['success'] = true;
+                $response['message'] = "Pedido criado com seucesos";
+                $response['return'] = $pedido;
+                //var_dump($response);
+                return response()->json($response, 201);
+            }
+            $response['success'] = false;
+                $response['message'] = "Endereço não pertence ao usuario";
+                $response['return'] = [];
+                //var_dump($response);
+                return response()->json($response, 403);
+        }
+        $pedido = new Pedido();
+        $pedido->dataEHora = Carbon::now()->toDateTimeString();
+        $pedido->status = "A";
+        $pedido->Users_id = $user_id;
+        $pedido->Enderecos_id = null;
+        try {
+            $pedido->save();
+        } catch (\Throwable $th) {
+            $response['success'] = false;
+            $response['message'] = "Erro ao salvar pedido";
+            $response['return'] = [];
+            //var_dump($response);
+            return response()->json($response, 507);
+        }
+
+        $pedido = Pedido::where('Users_id', $user_id)->orderBy('id', 'DESC')->get();
+
+        $response['success'] = true;
+        $response['message'] = "Pedido criado com seucesos";
+        $response['return'] = $pedido;
+        //var_dump($response);
+        return response()->json($response, 201);
     }
 
     /**

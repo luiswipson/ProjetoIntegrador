@@ -22,4 +22,5 @@ Route::resource('tipoproduto','TipoProdutoController');
 Route::resource('produto','ProdutoController');
 Route::resource('endereco','EnderecoController');
 
-Route::get('pedido' , 'PedidoController@index')->name('pedido.index');
+Route::get('/pedido' , 'PedidoController@index')->name('pedido.index');
+Route::post('/pedido/{endereco_id}' , 'PedidoController@store')->name('pedido.store');
