@@ -50,7 +50,7 @@
             <form action="">
               @csrf
               <div class="form-group">
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select class="form-control" id="id-selecao-tipo-produto">
                   @foreach ($tipoProdutos as $tipoProduto)
                   <option value={{$tipoProduto->id}}>{{$tipoProduto->descricao}}</option>    
                   @endforeach
@@ -64,7 +64,7 @@
              <form action="">
               @csrf
               <div class="form-group">
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select id="id-selecao-produto" class="form-control" >
                   @foreach ($produtos as $produto)
                       <option value={{$produto->id}}>{{$produto->nome}}</option>
                   @endforeach

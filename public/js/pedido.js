@@ -24,3 +24,23 @@ $('#id-form-novo-pedido').on('submit', function(event){
     });
 });
 
+$('#id-selecao-tipo-produto').on('change', function(event){
+    const tipoProdutoId = $('#id-selecao-tipo-produto').val();
+    $.ajax({
+        type: "GET",
+        url: `/pedidoproduto/getTodosProdutosDeTipo/${tipoProdutoId}`,
+        data: null ,//$(this).serialize(),
+        dataType: 'json',
+        success: function(response){
+            $('#id-selecao-produto').html("");
+            console.log(response.message);
+            console.log(response.return);
+            response.return.forEach(element =>{
+                $('#id-selecao-produto').append(`<option value=${element.id}>${element.nome}</option>`);
+            });
+        },
+        error: function(error){
+            
+        }
+    });
+});
