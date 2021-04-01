@@ -44,3 +44,30 @@ $('#id-selecao-tipo-produto').on('change', function(event){
         }
     });
 });
+
+$('#id-botao-adicionar-produto').on('click', function(event){
+    event.preventDefault();
+    let id_pedido;
+    if($("#list-pedidos a.active")[0]){
+        id_pedido = $("#list-pedidos a.active")[0].getAttribute("value");
+
+    }
+    const id_produto = $("#id-selecao-produto").val();
+    const quantidade = $("#spinner").val();
+    const id_endereco = $("#id-selecao-endereco").val();
+    //console.log(`${id_produto} - ${quantidade} - ${id_endereco}`);
+    if(id_pedido && id_produto && quantidade && id_endereco){
+        $.ajax({
+            type: "POST",
+            url: `/pedidoproduto/${id_pedido}/${id_produto}/${id_endereco}/${quantidade}`,
+            data: $('#id-form-add-pedido-produto').serialize(),
+            dataType: 'json',
+            success: function(response){
+                console.log(response);
+            },
+            error: function(error){
+
+            }
+        });
+    }
+});

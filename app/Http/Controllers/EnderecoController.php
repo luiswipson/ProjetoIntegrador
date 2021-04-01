@@ -25,8 +25,8 @@ class EnderecoController extends Controller
      */
     private function indexMessage($message)
     {
-        $enderecos = DB::select("select Enderecos.id, Enderecos.bairro, Enderecos.logradouro, Enderecos.numero, Enderecos.complemento from Enderecos
-        where Enderecos.Users_id = 1");                        
+        $user_id = 1;
+        $enderecos = Endereco::where('Users_id', $user_id)->get();
         return view('Endereco.index')->with('enderecos', $enderecos)->with('message', $message);
     }
 
@@ -37,7 +37,6 @@ class EnderecoController extends Controller
      */
     public function create()
     {
-      // Buscar os dados que estão na tabela Tipo_Produtos
       $enderecos = DB::select('select * from Enderecos');
       return view('Endereco.create')->with('enderecos', $enderecos);
     }
@@ -59,16 +58,12 @@ class EnderecoController extends Controller
         try{
             $endereco->save();
         } catch (\Throwable $th) {
-            // Constrói a mensagem
             $message['type'] = 'danger';
             $message['message'] = "Problema ao salvar um recurso: " . $th->getMessage();
-            // Retorna a execução do método indexMessage
             return $this->indexMessage($message);
         }
-        // Constrói a mensagem
         $message['type'] = 'success';
         $message['message'] = 'Recurso cadastrado com sucesso';
-        // Retorna a execução do método indexMessage
         return $this->indexMessage($message);
     }
 
@@ -89,10 +84,8 @@ class EnderecoController extends Controller
             }
             
         }
-        // Constrói a mensagem
         $message['type'] = 'danger';
         $message['message'] = 'Endereço não encontrado';
-        // Retorna a execução do método indexMessage
         return $this->indexMessage($message);
     }
 
@@ -141,23 +134,17 @@ class EnderecoController extends Controller
             try {
                 $endereco->update();
             } catch (\Throwable $th) {
-                // Constrói a mensagem
                 $message['type'] = 'danger';
                 $message['message'] = "Problema ao atualizar um endereço: " . $th->getMessage();
-                // Retorna a execução do método indexMessage
                 return $this->indexMessage($message);
             }
-            // Constrói a mensagem
             $message['type'] = 'success';
             $message['message'] = 'Endereço atualizado com sucesso';
-            // Retorna a execução do método indexMessage
             return $this->indexMessage($message);
         }
         }
-        // Constrói a mensagem
         $message['type'] = 'danger';
         $message['message'] = 'Endereço não encontrado';
-        // Retorna a execução do método indexMessage
         return $this->indexMessage($message);
     }
 
@@ -175,22 +162,16 @@ class EnderecoController extends Controller
             try {
                 $endereco->delete();
             } catch (\Throwable $th) {
-                // Constrói a mensagem
                 $message['type'] = 'danger';
                 $message['message'] = "Problema ao remover um endereço: " . $th->getMessage();
-                // Retorna a execução do método indexMessage
                 return $this->indexMessage($message);
             }
-            // Constrói a mensagem
             $message['type'] = 'success';
             $message['message'] = 'Endereço removido com sucesso';
-            // Retorna a execução do método indexMessage
             return $this->indexMessage($message);
         }
-        // Constrói a mensagem
         $message['type'] = 'danger';
         $message['message'] = 'Endereço não encontrado';
-        // Retorna a execução do método indexMessage
         return $this->indexMessage($message);
     }
 }

@@ -11,23 +11,23 @@
     <div class="container">
         <div class="form-group">
           <label for="imput-ID">ID</label>
-          <input type="email" class="form-control" id="imput-ID" value={{$endereco->id}} disabled>
+          <input type="email" class="form-control" id="imput-ID" value="{{$endereco->id}}" disabled>
         </div>
         <div class="form-group">
             <label for="input-nome">Bairro</label>
-            <input type="text" class="form-control" id="input-nome" value={{$endereco->bairro}} disabled>
+            <input type="text" class="form-control" id="input-nome" value="{{$endereco->bairro}}" disabled>
           </div>
           <div class="form-group">
             <label for="input-preco">Logradouro</label>
-            <input type="text" class="form-control" id="input-preco" value={{$endereco->logradouro}} disabled>
+            <input type="text" class="form-control" id="input-preco" value="{{$endereco->logradouro}}" disabled>
           </div>
           <div class="form-group">
             <label for="input-preco">Numero</label>
-            <input type="text" class="form-control" id="input-preco" value={{$endereco->numero}} disabled>
+            <input type="text" class="form-control" id="input-preco" value="{{$endereco->numero}}" disabled>
           </div>
           <div class="form-group">
             <label for="input-preco">Complemento</label>
-            <input type="text" class="form-control" id="input-preco" value={{$endereco->complemento}} disabled>
+            <input type="text" class="form-control" id="input-preco" value="{{$endereco->complemento}}" disabled>
           </div>
           
         <a href={{route('endereco.index')}} class="btn btn-primary">Voltar</a>

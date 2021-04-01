@@ -26,3 +26,4 @@ Route::get('/pedido' , 'PedidoController@index')->name('pedido.index');
 Route::post('/pedido/{endereco_id}' , 'PedidoController@store')->name('pedido.store');
 
 Route::get('/pedidoproduto/getTodosProdutosDeTipo/{produto_id}', 'PedidoProdutoController@getTodosProdutosDeTipo')->name('pedidoproduto.getTodosProdutosDeTipo');
+Route::post('/pedidoproduto/{id_pedido}/{id_produto}/{id_endereco}/{quantidade}', 'PedidoProdutoController@store')->name('pedidoproduto.store');

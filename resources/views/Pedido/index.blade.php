@@ -73,9 +73,9 @@
             </form>
             <input id="spinner" name="value" value="1">
             {{-- Botão adicionar --}}
-            <form method="POST" class="my-3" action="#">
+            <form id='id-form-add-pedido-produto' method="POST" class="my-3" action="#">
               @csrf
-                <input type="submit" class="btn btn-success w-100" value="Adicionar Produto">
+                <input id="id-botao-adicionar-produto" type="submit" class="btn btn-success w-100" value="Adicionar Produto">
             </form>
              {{-- Formulario de Endereço --}}
              <form action="">
@@ -111,14 +111,16 @@
             <div class="form-group my-3">
               <input type="text" class="form-control text-center" id="id-text-status" value="Estado: {{$estado}}">
             </div>
-            <div id="list-produtos" class="list-group my-3">
-              @foreach ($produtosPedido as $produtoPedido)
-                <span href="#" class="list-group-item " value1={{$produtoPedido->Pedidos_id}} value2={{$produtoPedido->Produtos_id}}>
-                  {{$produtoPedido->descricao}} - {{$produtoPedido->nome}} - {{$produtoPedido->quantidade}}x
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill icons-list-produtos" viewBox="0 0 16 16">
-                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                </svg></span>
-              @endforeach
+           <div id="list-produtos" class="list-group my-3">
+               @foreach ($produtosPedido as $produtoPedido)
+                        <span href="#" class="list-group-item" value1={{$produtoPedido->Pedidos_id}} value2={{$produtoPedido->Produtos_id}}>
+                            {{$produtoPedido->descricao}} - {{$produtoPedido->nome}} - {{$produtoPedido->quantidade}}x
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash icons-list-produto" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                            </svg>
+                        </span>
+                    @endforeach
             </div>
             <div class="input-group">
               <input type="text" class="form-control" value="Valor total">
