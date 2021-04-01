@@ -26,9 +26,9 @@
             <div id="list-pedidos" class="list-group my-3">
               @foreach ($pedidos as $pedido)
               @if ($loop->first)
-              <a href="#" class="list-group-item list-group-item-action active" data-toggle="list" value={{$pedido->id}}>Pedido {{$pedido->id}}</a>
+              <a href="#" class="list-group-item list-group-item-action active" data-toggle="list" value={{$pedido->id}}>Pedido {{$pedido->id}}</a>  
               @else
-              <a href="#" class="list-group-item list-group-item-action" data-toggle="list">Pedido {{$pedido->id}}</a>
+              <a href="#" class="list-group-item list-group-item-action" data-toggle="list" value={{$pedido->id}}>Pedido {{$pedido->id}}</a>    
               @endif
             
               
@@ -81,25 +81,34 @@
              <form action="">
               @csrf
               <div class="form-group">
-                <select class="form-control" id="id-selecao-endereco">
+                <select id="id-selecao-endereco" class="form-control">
                   @foreach ($enderecos as $endereco)
-                      <option value={{$endereco->id}}>
-                        {{$endereco->logradouro}}, nº {{$endereco->numero}}. {{$endereco->bairro}}
-                      @if ($endereco->complemento)
-                       . {{$endereco->complemento}}     
-                      @endif
+                    @if ($pedidos[0]->Enderecos_id == $endereco->id)
+                      <option value={{$endereco->id}} selected>
+                          {{$endereco->logradouro}}, nº {{$endereco->numero}}. {{$endereco->bairro}}
+                          @if ($endereco->complemento)
+                            . {{$endereco->complemento}}    
+                          @endif
                       </option>
+                    @else
+                      <option value={{$endereco->id}}>
+                          {{$endereco->logradouro}}, nº {{$endereco->numero}}. {{$endereco->bairro}}
+                          @if ($endereco->complemento)
+                            . {{$endereco->complemento}}    
+                          @endif
+                      </option>
+                    @endif
                   @endforeach
-                  <option value=null>Retira no local</option>
-                 
-                  
-                  {{-- <option>Rua X</option>
-                  <option>Rua Y</option> --}}
+                  @if ($pedidos[0]->Enderecos_id == null)
+                    <option value=null selected>Retirar no local</option>
+                  @else
+                    <option value=null>Retirar no local</option>
+                  @endif
                 </select>
-              </div>
+            </div>
             </form>
             {{-- Botão enviar --}}
-            <form method="POST" class="my-3" action="#">
+            <form id="id-form-enviar-pedido" method="POST" class="my-3" action="#">
               @csrf
                 <input type="submit" class="btn btn-info w-100" value="Enviar Pedido" readonly>
             </form>
@@ -126,7 +135,7 @@
               <input type="text" class="form-control" value="Valor total">
               <div class="input-group-append">
                 <span class="input-group-text">R$</span>
-                <span class="input-group-text">{{$totalPedido}}</span>
+                <span id="id-spam-preco" class="input-group-text">{{$totalPedido}}</span>
               </div>
             </div>
           </div>

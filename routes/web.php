@@ -24,6 +24,8 @@ Route::resource('endereco','EnderecoController');
 
 Route::get('/pedido' , 'PedidoController@index')->name('pedido.index');
 Route::post('/pedido/{endereco_id}' , 'PedidoController@store')->name('pedido.store');
+Route::post('/pedido/enviarPedido/{pedido_id}', 'PedidoController@enviarPedido')->name('pedido.enviarPedido');
 
 Route::get('/pedidoproduto/getTodosProdutosDeTipo/{produto_id}', 'PedidoProdutoController@getTodosProdutosDeTipo')->name('pedidoproduto.getTodosProdutosDeTipo');
+Route::get('/pedidoproduto/getPedidoProdutosList/{pedido_id}', 'PedidoProdutoController@getPedidoProdutosList')->name('pedidoproduto.getPedidoProdutosList');
 Route::post('/pedidoproduto/{id_pedido}/{id_produto}/{id_endereco}/{quantidade}', 'PedidoProdutoController@store')->name('pedidoproduto.store');
